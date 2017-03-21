@@ -167,10 +167,16 @@ return [
          * Package Service Providers...
          */
         Laravel\Tinker\TinkerServiceProvider::class,
+		SleepingOwl\Admin\Providers\SleepingOwlServiceProvider::class,
+		Barryvdh\Debugbar\ServiceProvider::class,
+		Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+		Cartalyst\Sentinel\Laravel\SentinelServiceProvider::class,
+		Intervention\Image\ImageServiceProvider::class,
 
-        /*
-         * Application Service Providers...
-         */
+
+		/*
+		 * Application Service Providers...
+		 */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
@@ -225,6 +231,12 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+
+		'Debugbar' => Barryvdh\Debugbar\Facade::class,
+		'Activation' => Cartalyst\Sentinel\Laravel\Facades\Activation::class,
+		'Reminder'   => Cartalyst\Sentinel\Laravel\Facades\Reminder::class,
+		'Sentinel'   => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
+		'Image' => Intervention\Image\Facades\Image::class,
 
     ],
 

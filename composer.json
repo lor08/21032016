@@ -14,7 +14,7 @@
         "intervention/image": "^2.3",
         "intervention/imagecache": "^2.3",
         "kalnoy/nestedset": "^4.2",
-	"laravelrus/sleepingowl": "4.*@dev"
+	    "laravelrus/sleepingowl": "4.*@dev"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -43,6 +43,8 @@
         ],
         "post-install-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postInstall",
+            "php artisan ide-helper:generate",
+            "php artisan ide-helper:meta",
             "php artisan optimize"
         ],
         "post-update-cmd": [
