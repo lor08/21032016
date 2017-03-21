@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePivotPermitRole extends Migration
+class CreatePaymentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class CreatePivotPermitRole extends Migration
      */
     public function up()
     {
-        Schema::create('permit_role', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->increments('id');
-			$table->integer('permit_id');
-			$table->integer('role_id');
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ class CreatePivotPermitRole extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('permit_role');
+        Schema::dropIfExists('payments');
     }
 }

@@ -19,6 +19,15 @@ class CreatePermitsTable extends Migration
 			$table->string('slug');
             $table->timestamps();
         });
+
+		Schema::create('permit_role', function (Blueprint $table) {
+			$table->increments('id');
+			$table->integer('permit_id');
+			$table->integer('role_id');
+			$table->timestamps();
+
+			$table->index([ 'permit_id', 'role_id' ]);
+		});
     }
 
     /**
@@ -29,5 +38,6 @@ class CreatePermitsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('permits');
-    }
+		Schema::dropIfExists('permit_role');
+	}
 }
