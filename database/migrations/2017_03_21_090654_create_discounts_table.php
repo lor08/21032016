@@ -18,7 +18,7 @@ class CreateDiscountsTable extends Migration
 			$table->string('name');
 			$table->enum('type', ['numeric', 'percent']);
 			$table->unsignedInteger('value');
-			$table->unsignedInteger('product_id');
+			$table->unsignedInteger('product_id')->nullable();
 			$table->timestamps();
 
 			$table->index([ 'product_id' ]);

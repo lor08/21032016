@@ -25,10 +25,11 @@ class CreateProductsTable extends Migration
 			$table->unsignedInteger('order')->default(100);
 			$table->boolean('status')->default(true);
 
-			$table->unsignedInteger('producer_id');
-			$table->unsignedInteger('discount_id');
+			$table->unsignedInteger('producer_id')->nullable();
+			$table->unsignedInteger('discount_id')->nullable();
 			$table->unsignedInteger('quantity')->default(0);
 			$table->float('price')->nullable();
+			$table->string('color')->nullable();
 			$table->string('weight')->nullable();
 			$table->string('length')->nullable();
 			$table->string('width')->nullable();

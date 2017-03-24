@@ -6,6 +6,8 @@ use AdminColumn;
 use AdminDisplay;
 use AdminForm;
 use AdminFormElement;
+use AdminSection;
+use App\Models\Property;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Section;
@@ -57,6 +59,14 @@ class Product extends Section
     public function onEdit($id)
     {
 		$form = AdminForm::panel();
+
+		$property = "Для нового товара нет возможности выбора свойств.";
+		if (! is_null($id)) {
+			$property = AdminSection::getModel(Property::class)->fireDisplay();
+			$property->getScopes()->push(['withProduct', $id]);
+			$property->setParameter('product_id', $id);
+		}
+
 		$tabs = AdminDisplay::tabbed([
 			'Товар' => new \SleepingOwl\Admin\Form\FormElements([
 				AdminFormElement::checkbox('status', 'Активность')->setDefaultValue(true),
@@ -84,12 +94,14 @@ class Product extends Section
 				AdminFormElement::text('price', 'Цена'),
 				AdminFormElement::text('quantity', 'Количество')->setDefaultValue(0),
 				AdminFormElement::select('discount_id', 'Скидка', \App\Models\Discount::class)->setDisplay('name')->nullable(),
+				AdminFormElement::text('color', 'Цвет'),
 				AdminFormElement::text('weight', 'Вес'),
 				AdminFormElement::text('length', 'Длина'),
 				AdminFormElement::text('width', 'Ширина'),
 				AdminFormElement::text('height', 'Высота'),
 				AdminFormElement::text('artikul', 'Артикул'),
 			]),
+			'Свойства' => new \SleepingOwl\Admin\Form\FormElements([$property]),
 		]);
 		$form->addElement($tabs);
 		return $form;

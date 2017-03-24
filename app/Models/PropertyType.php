@@ -2,14 +2,11 @@
 
 namespace App\Models;
 
-use App\Traits\Categorizable;
 use Illuminate\Database\Eloquent\Model;
 use Request;
 
-class Product extends Model
+class PropertyType extends Model
 {
-	use Categorizable;
-
 	public function properties()
 	{
 		return $this->hasMany(Property::class);

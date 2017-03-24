@@ -12,6 +12,8 @@
 */
 
 Route::get('/', function () {
+	Auth::loginUsingId(1);
+//	dd( Auth::getSession()->getId() );
 	return "Hello World";
 //    return view('welcome');
 });

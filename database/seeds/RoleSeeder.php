@@ -12,6 +12,7 @@ class RoleSeeder extends Seeder
 	public function run()
 	{
 		$admin = [
+			'first_name' => 'Администратор',
 			'email' => 'admin@admin.com',
 			'password' => '4815162342',
 		];
@@ -25,6 +26,13 @@ class RoleSeeder extends Seeder
 		];
 		$adminRole = Sentinel::getRoleRepository()->createModel()->fill($role)->save();
 		$adminUser->roles()->attach($adminRole);
+
+		$moderator = [
+			'first_name' => 'Модератор',
+			'email' => 'moderator@moderator.com',
+			'password' => '4815162342',
+		];
+		$moderatorUser = Sentinel::registerAndActivate($moderator);
 		$role = [
 			'name' => 'Модератор',
 			'slug' => 'moderator',
@@ -33,11 +41,14 @@ class RoleSeeder extends Seeder
 			]
 		];
 		$moderatorRole = Sentinel::getRoleRepository()->createModel()->fill($role)->save();
+		$moderatorUser->roles()->attach($moderatorRole);
+
 		$role = [
 			'name' => 'Пользователь',
 			'slug' => 'user',
 		];
 		$userRole = Sentinel::getRoleRepository()->createModel()->fill($role)->save();
+
 		$role = [
 			'name' => 'Забанен',
 			'slug' => 'banned',

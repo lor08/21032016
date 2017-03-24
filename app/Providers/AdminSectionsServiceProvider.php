@@ -8,6 +8,8 @@ use App\Models\Permit;
 use App\Models\Producer;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use App\Models\Property;
+use App\Models\PropertyType;
 use App\Models\Role;
 use App\Models\User;
 use SleepingOwl\Admin\Navigation\Page;
@@ -28,6 +30,8 @@ class AdminSectionsServiceProvider extends ServiceProvider
 		ProductCategory::class => 'App\Admin\Sections\ProductCategory',
 		Producer::class => 'App\Admin\Sections\Producer',
 		Discount::class => 'App\Admin\Sections\Discount',
+		PropertyType::class => 'App\Admin\Sections\PropertyType',
+		Property::class => 'App\Admin\Sections\Property',
     ];
 
     /**
@@ -37,6 +41,8 @@ class AdminSectionsServiceProvider extends ServiceProvider
      */
     public function boot(\SleepingOwl\Admin\Admin $admin)
     {
+		$this->registerPolicies('App\\Admin\\Policies\\');
+
         parent::boot($admin);
 
 		$this->registerNavigation();
@@ -54,6 +60,7 @@ class AdminSectionsServiceProvider extends ServiceProvider
 					(new Page(Product::class))->setPriority(10)->setTitle('Товары')->setIcon('fa fa-list'),
 					(new Page(Producer::class))->setPriority(20)->setTitle('Производители')->setIcon('fa fa-list'),
 					(new Page(Discount::class))->setPriority(30)->setTitle('Скидки')->setIcon('fa fa-list'),
+					(new Page(PropertyType::class))->setPriority(40)->setTitle('Свойства')->setIcon('fa fa-list'),
 				]
 			],
 			[

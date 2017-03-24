@@ -13,10 +13,21 @@ class CreatePropertiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('properties', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
-        });
+		Schema::create('properties', function (Blueprint $table) {
+			$table->increments('id');
+			$table->unsignedInteger('product_id');
+			$table->unsignedInteger('property_type_id');
+			$table->text('value');
+			$table->timestamps();
+
+			$table->index([ 'product_id' , 'property_type_id']);
+		});
+		Schema::create('property_types', function (Blueprint $table) {
+			$table->increments('id');
+			$table->string('name');
+			$table->string('slug')->unique();
+			$table->timestamps();
+		});
     }
 
     /**
@@ -26,6 +37,7 @@ class CreatePropertiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('properties');
+		Schema::dropIfExists('properties');
+		Schema::dropIfExists('property_types');
     }
 }
