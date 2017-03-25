@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNewsTable extends Migration
+class CreateDownloadsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateNewsTable extends Migration
      */
     public function up()
     {
-        Schema::create('news', function (Blueprint $table) {
+        Schema::create('downloads', function (Blueprint $table) {
 			$table->increments('id');
 			$table->string('name');
 			$table->string('slug')->unique();
@@ -24,8 +24,14 @@ class CreateNewsTable extends Migration
 			$table->unsignedInteger('views')->default(0);
 			$table->unsignedInteger('order')->default(100);
 			$table->boolean('status')->default(true);
+
+			$table->unsignedInteger('file_id')->nullable();
+			$table->unsignedInteger('discount_id')->nullable();
+			$table->float('price')->nullable();
 			$table->timestamps();
-		});
+
+			$table->index([ 'file_id', 'discount_id' ]);
+        });
     }
 
     /**
@@ -35,6 +41,6 @@ class CreateNewsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('news');
+        Schema::dropIfExists('downloads');
     }
 }

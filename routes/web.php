@@ -10,10 +10,16 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Models\User;
 
 Route::get('/', function () {
-	Auth::loginUsingId(1);
+	$user = User::find(1);
+	Sentinel::loginAndRemember($user);
+	return "Hello World";
 //	dd( Auth::getSession()->getId() );
-	return "Hello Worldsik";
 //    return view('welcome');
 });
+Route::get('/logout', function () {
+	Sentinel::logout();
+	return back();
+})->name("logout");

@@ -12,13 +12,13 @@ use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Section;
 
 /**
- * Class Product
+ * Class Downloads
  *
- * @property \App\Models\Product $model
+ * @property \App\Models\Downloads $model
  *
  * @see http://sleepingowladmin.ru/docs/model_configuration_section
  */
-class Product extends Section
+class Downloads extends Section
 {
     /**
      * @see http://sleepingowladmin.ru/docs/model_configuration#ограничение-прав-доступа
@@ -30,7 +30,7 @@ class Product extends Section
     /**
      * @var string
      */
-    protected $title = "Товары";
+    protected $title = "Каталог файлов";
 
     /**
      * @var string
@@ -47,6 +47,7 @@ class Product extends Section
 			->setColumns([
 				AdminColumn::link('id', '#')->setWidth('30px'),
 				AdminColumn::link('name')->setLabel('Название'),
+				AdminColumn::text('price')->setLabel('Цена'),
 			])->paginate(20);
     }
 
@@ -59,12 +60,13 @@ class Product extends Section
     {
 		$form = AdminForm::panel();
 
-		$property = "Для нового товара нет возможности выбора свойств.";
-		if (! is_null($id)) {
-			$property = AdminSection::getModel(\App\Models\Property::class)->fireDisplay();
-			$property->getScopes()->push(['withProduct', $id]);
-			$property->setParameter('product_id', $id);
-		}
+
+//		$property = "Для нового товара нет возможности выбора свойств.";
+//		if (! is_null($id)) {
+//			$property = AdminSection::getModel(\App\Models\Property::class)->fireDisplay();
+//			$property->getScopes()->push(['withProduct', $id]);
+//			$property->setParameter('product_id', $id);
+//		}
 
 		$tabs = AdminDisplay::tabbed([
 			'Товар' => new \SleepingOwl\Admin\Form\FormElements([
@@ -75,11 +77,12 @@ class Product extends Section
 					->setDisplay('name')
 					->setLoadOptionsQueryPreparer(function ($element, $query) {
 						return $query
-							->where('id', 1)
-							->orWhere('parent_id', 1);
+							->where('id', 2)
+							->orWhere('parent_id', 2);
 					}),
-				AdminFormElement::select('producer_id', 'Производитель', \App\Models\Producer::class)->setDisplay('name'),
 				AdminFormElement::number('order', 'Сортировка')->setDefaultValue(100),
+
+				AdminFormElement::upload('typo', 'Файл'),
 			]),
 			'Аннонс' => new \SleepingOwl\Admin\Form\FormElements([
 				AdminFormElement::wysiwyg('preview_text', 'Описание для анонса'),
@@ -91,20 +94,13 @@ class Product extends Section
 			]),
 			'Каталог' => new \SleepingOwl\Admin\Form\FormElements([
 				AdminFormElement::text('price', 'Цена'),
-				AdminFormElement::text('quantity', 'Количество')->setDefaultValue(0),
 				AdminFormElement::select('discount_id', 'Скидка', \App\Models\Discount::class)->setDisplay('name')->nullable(),
-				AdminFormElement::text('color', 'Цвет'),
-				AdminFormElement::text('weight', 'Вес'),
-				AdminFormElement::text('length', 'Длина'),
-				AdminFormElement::text('width', 'Ширина'),
-				AdminFormElement::text('height', 'Высота'),
-				AdminFormElement::text('artikul', 'Артикул'),
 			]),
-			'Свойства' => new \SleepingOwl\Admin\Form\FormElements([$property]),
+//			'Свойства' => new \SleepingOwl\Admin\Form\FormElements([$property]),
 		]);
 		$form->addElement($tabs);
-		return $form;
-	}
+		return $form->setHtmlAttribute('enctype', 'multipart/form-data');
+    }
 
     /**
      * @return FormInterface
