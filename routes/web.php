@@ -15,7 +15,7 @@ use App\Models\User;
 Route::get('/', function () { return view('front.home'); });
 Route::get('/catalog/grid', function () { return view('front.catalog.grid'); });
 Route::get('/catalog/list', function () { return view('front.catalog.list'); });
-Route::get('/catalog/detail', function () { return view('front.catalog.detail'); });
+Route::get('/catalog/detail', 'CatalogController@view');
 Route::get('/cart', function () { return view('front.sale.cart'); });
 
 //Route::get('/', function () {

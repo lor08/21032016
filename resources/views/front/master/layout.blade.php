@@ -44,6 +44,7 @@
 	@include('front.master.footer')
 </div>
 <!-- JavaScript -->
+{{--<script src="//code.jquery.com/jquery-3.2.1.js" ></script>--}}
 <script type="text/javascript" src="{{ url('js/jquery.min.js') }}"></script>
 <script type="text/javascript" src="{{ url('js/bootstrap.min.js') }}"></script>
 <script type="text/javascript" src="{{ url('js/parallax.js') }}"></script>

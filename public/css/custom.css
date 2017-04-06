@@ -1,0 +1,3 @@
+.property-row label { display: inline-block; }
+.property-row label { display: block; }
+.property-row select { width: 100%; }
